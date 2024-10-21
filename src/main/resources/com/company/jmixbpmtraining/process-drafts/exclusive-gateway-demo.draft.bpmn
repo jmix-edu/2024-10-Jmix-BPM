@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="exclusion-gateway-demo" name="exclusion-gateway-demo" isExecutable="true">
+    <exclusiveGateway id="Gateway_0r2ejfv">
+      <outgoing>Flow_2</outgoing>
+      <outgoing>Flow_1</outgoing>
+    </exclusiveGateway>
+    <endEvent id="Event_0kn6j1t" name="1">
+      <incoming>Flow_1</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1" name="1 &#62; 0" sourceRef="Gateway_0r2ejfv" targetRef="Event_0kn6j1t">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${1&gt;0}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="Event_1wmb937" name="2">
+      <incoming>Flow_2</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_2" name="2 &#62; 0" sourceRef="Gateway_0r2ejfv" targetRef="Event_1wmb937">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${2&gt;0}</conditionExpression>
+    </sequenceFlow>
+    <startEvent id="Event_15w11z6">
+      <outgoing>Flow_1sjggq6</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_1sjggq6" sourceRef="Event_15w11z6" targetRef="Gateway_0r2ejfv" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="exclusion-gateway-demo">
+      <bpmndi:BPMNShape id="Gateway_0r2ejfv_di" bpmnElement="Gateway_0r2ejfv" isMarkerVisible="true">
+        <omgdc:Bounds x="242" y="140" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kn6j1t_di" bpmnElement="Event_0kn6j1t">
+        <omgdc:Bounds x="402" y="72" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="417" y="115" width="7" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wmb937_di" bpmnElement="Event_1wmb937">
+        <omgdc:Bounds x="402" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="417" y="265" width="7" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15w11z6_di" bpmnElement="Event_15w11z6">
+        <omgdc:Bounds x="122" y="147" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0afzrzu_di" bpmnElement="Flow_1">
+        <di:waypoint x="267" y="140" />
+        <di:waypoint x="267" y="90" />
+        <di:waypoint x="402" y="90" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="322" y="72" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yrzt11_di" bpmnElement="Flow_2">
+        <di:waypoint x="267" y="190" />
+        <di:waypoint x="267" y="240" />
+        <di:waypoint x="402" y="240" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="322" y="223" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sjggq6_di" bpmnElement="Flow_1sjggq6">
+        <di:waypoint x="158" y="165" />
+        <di:waypoint x="242" y="165" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

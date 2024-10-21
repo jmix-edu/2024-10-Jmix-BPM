@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="jbt">
+        <createTable tableName="JBT_ORDER_LINE">
+            <column name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JBT_ORDER_LINE"/>
+            </column>
+            <column name="PIZZA_ITEM_ID" type="INT"/>
+            <column name="QUANTITY" type="BIGINT"/>
+            <column name="SPECIAL_REQUIREMENTS" type="VARCHAR(255)"/>
+            <column name="PIZZA_EATER_ID" type="UUID"/>
+            <column name="PIZZA_ORDER_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="jbt">
+        <createTable tableName="JBT_PIZZA_ITEM">
+            <column name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JBT_PIZZA_ITEM"/>
+            </column>
+            <column name="NAME" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="DOUBLE"/>
+            <column name="STATUS" type="VARCHAR(25)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="jbt">
+        <createTable tableName="JBT_PIZZA_ORDER">
+            <column name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JBT_PIZZA_ORDER"/>
+            </column>
+            <column name="AMOUNT" type="DOUBLE"/>
+            <column name="INITIATOR_ID" type="UUID"/>
+            <column name="APPROVER_ID" type="UUID"/>
+            <column name="STATUS" type="INT"/>
+            <column name="DELIVERY_NUMBER" type="VARCHAR(25)"/>
+            <column name="PROCESS_INSTANCE_ID" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="jbt">
+        <createIndex indexName="IDX_JBT_ORDER_LINE_PIZZA_EATER" tableName="JBT_ORDER_LINE">
+            <column name="PIZZA_EATER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PIZZA_EATER_ID" baseTableName="JBT_ORDER_LINE"
+                                 constraintName="FK_JBT_ORDER_LINE_ON_PIZZA_EATER" referencedColumnNames="ID"
+                                 referencedTableName="JBT_USER"/>
+    </changeSet>
+    <changeSet id="5" author="jbt">
+        <createIndex indexName="IDX_JBT_ORDER_LINE_PIZZA_ORDER" tableName="JBT_ORDER_LINE">
+            <column name="PIZZA_ORDER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PIZZA_ORDER_ID" baseTableName="JBT_ORDER_LINE"
+                                 constraintName="FK_JBT_ORDER_LINE_ON_PIZZA_ORDER" onDelete="CASCADE"
+                                 referencedColumnNames="ID" referencedTableName="JBT_PIZZA_ORDER"/>
+    </changeSet>
+    <changeSet id="6" author="jbt">
+        <createIndex indexName="IDX_JBT_PIZZA_ORDER_APPROVER" tableName="JBT_PIZZA_ORDER">
+            <column name="APPROVER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="APPROVER_ID" baseTableName="JBT_PIZZA_ORDER"
+                                 constraintName="FK_JBT_PIZZA_ORDER_ON_APPROVER" referencedColumnNames="ID"
+                                 referencedTableName="JBT_USER"/>
+    </changeSet>
+    <changeSet id="7" author="jbt">
+        <createIndex indexName="IDX_JBT_PIZZA_ORDER_INITIATOR" tableName="JBT_PIZZA_ORDER">
+            <column name="INITIATOR_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INITIATOR_ID" baseTableName="JBT_PIZZA_ORDER"
+                                 constraintName="FK_JBT_PIZZA_ORDER_ON_INITIATOR" referencedColumnNames="ID"
+                                 referencedTableName="JBT_USER"/>
+    </changeSet>
+    <changeSet id="8" author="jbt">
+        <addForeignKeyConstraint baseColumnNames="PIZZA_ITEM_ID" baseTableName="JBT_ORDER_LINE"
+                                 constraintName="FK_JBT_ORDER_LINE_ON_PIZZA_ITEM" referencedColumnNames="ID"
+                                 referencedTableName="JBT_PIZZA_ITEM"/>
+    </changeSet>
+</databaseChangeLog>

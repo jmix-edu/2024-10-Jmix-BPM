@@ -3,6 +3,12 @@
 
     <menu id="application" title="msg://com.company.jmixbpmtraining/menu.application.title" opened="false">
         <item view="jbt_User.list" title="msg://com.company.jmixbpmtraining.view.user/UserListView.title"/>
+        <item view="jbt_PizzaItem.list"
+              title="msg://com.company.jmixbpmtraining.view.pizzaitem/pizzaItemListView.title"/>
+        <item view="jbt_OrderLine.list"
+              title="msg://com.company.jmixbpmtraining.view.orderline/orderLineListView.title"/>
+        <item view="jbt_PizzaOrder.list"
+              title="msg://com.company.jmixbpmtraining.view.pizzaorder/pizzaOrderListView.title"/>
     </menu>
 
 </menu-config>
