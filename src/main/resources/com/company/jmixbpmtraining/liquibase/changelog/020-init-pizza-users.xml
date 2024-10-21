@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="jmix-bpm-training" context="!cuba">
+
+        <insert tableName="JBT_USER" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="peter"/>
+            <column name="PASSWORD" value="{noop}peter"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="POSITION_" value="team leader"/>
+        </insert>
+
+        <insert tableName="JBT_USER" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="bob"/>
+            <column name="PASSWORD" value="{noop}bob"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="POSITION_" value="developer"/>
+        </insert>
+
+        <insert tableName="JBT_USER" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="ron"/>
+            <column name="PASSWORD" value="{noop}ron"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="POSITION_" value="developer"/>
+        </insert>
+
+        <insert tableName="JBT_USER" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="jane"/>
+            <column name="PASSWORD" value="{noop}jane"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="POSITION_" value="accountant"/>
+        </insert>
+
+        <insert tableName="JBT_USER" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="alice"/>
+            <column name="PASSWORD" value="{noop}alice"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="POSITION_" value="accountant"/>
+        </insert>
+
+    </changeSet>
+
+    <changeSet id="2" author="jmix-bpm-training" context="!cuba">
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="peter"/>
+            <column name="ROLE_CODE" value="ui-minimal"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="bob"/>
+            <column name="ROLE_CODE" value="ui-minimal"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="ron"/>
+            <column name="ROLE_CODE" value="ui-minimal"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="jane"/>
+            <column name="ROLE_CODE" value="ui-minimal"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="alice"/>
+            <column name="ROLE_CODE" value="ui-minimal"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+    </changeSet>
+
+    <changeSet id="3" author="jmix-bpm-training" context="!cuba">
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="peter"/>
+            <column name="ROLE_CODE" value="bpm-process-actor"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="bob"/>
+            <column name="ROLE_CODE" value="bpm-process-actor"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="ron"/>
+            <column name="ROLE_CODE" value="bpm-process-actor"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="jane"/>
+            <column name="ROLE_CODE" value="bpm-process-actor"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="hsqldb">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="alice"/>
+            <column name="ROLE_CODE" value="bpm-process-actor"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+    </changeSet>
+
+    <changeSet id="4" author="jmix-bpm-training" context="!cuba">
+        <insert tableName="SEC_USER_SUBSTITUTION">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <column name="SUBSTITUTED_USERNAME" value="peter"/>
+            <column name="CREATED_BY" value="admin"/>
+            <column name="CREATE_TS" valueComputed="current_timestamp"/>
+            <column name="UPDATE_TS" valueComputed="current_timestamp"/>
+        </insert>
+
+        <insert tableName="SEC_USER_SUBSTITUTION">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <column name="SUBSTITUTED_USERNAME" value="bob"/>
+            <column name="CREATED_BY" value="admin"/>
+            <column name="CREATE_TS" valueComputed="current_timestamp"/>
+            <column name="UPDATE_TS" valueComputed="current_timestamp"/>
+        </insert>
+
+        <insert tableName="SEC_USER_SUBSTITUTION">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <column name="SUBSTITUTED_USERNAME" value="ron"/>
+            <column name="CREATED_BY" value="admin"/>
+            <column name="CREATE_TS" valueComputed="current_timestamp"/>
+            <column name="UPDATE_TS" valueComputed="current_timestamp"/>
+        </insert>
+
+        <insert tableName="SEC_USER_SUBSTITUTION">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <column name="SUBSTITUTED_USERNAME" value="jane"/>
+            <column name="CREATED_BY" value="admin"/>
+            <column name="CREATE_TS" valueComputed="current_timestamp"/>
+            <column name="UPDATE_TS" valueComputed="current_timestamp"/>
+        </insert>
+
+        <insert tableName="SEC_USER_SUBSTITUTION">
+            <column name="ID" valueComputed="UUID()"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <column name="SUBSTITUTED_USERNAME" value="alice"/>
+            <column name="CREATED_BY" value="admin"/>
+            <column name="CREATE_TS" valueComputed="current_timestamp"/>
+            <column name="UPDATE_TS" valueComputed="current_timestamp"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
