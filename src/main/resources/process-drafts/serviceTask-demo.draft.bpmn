@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:flowable="http://flowable.org/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="servicetask-demo" name="ServiceTask Demo" isExecutable="true">
+    <extensionElements>
+      <jmix:conditionDetails conditionSource="userTaskOutcome" />
+    </extensionElements>
+    <startEvent id="startEvent1">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="message" caption="Message" type="string" editable="true" required="false" />
+            <jmix:formField id="numberOfUsers" caption="Number of users" type="long" editable="true" required="true" />
+          </jmix:formFields>
+        </jmix:formData>
+      </extensionElements>
+      <outgoing>Flow_0hqgwr4</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_0hqgwr4" sourceRef="startEvent1" targetRef="Activity_java_delegate" />
+    <endEvent id="Event_0afb6ur">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+      </extensionElements>
+      <incoming>Flow_1md9psn</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0sw22ze" sourceRef="Activity_java_delegate" targetRef="Activity_delegate_with_field_injection" />
+    <serviceTask id="Activity_java_delegate" name="Java delegate" flowable:class="com.company.jmixbpmtraining.delegate.RandomIndexJavaDelegate" jmix:taskType="javaDelegateClass">
+      <extensionElements />
+      <incoming>Flow_0hqgwr4</incoming>
+      <outgoing>Flow_0sw22ze</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_1638bnl" sourceRef="Activity_delegate_with_field_injection" targetRef="Activity_delegate_expression" />
+    <serviceTask id="Activity_delegate_with_field_injection" name="Java delegate with field injection" flowable:class="com.company.jmixbpmtraining.delegate.UpperCaseJavaDelegate" jmix:taskType="javaDelegateClass">
+      <extensionElements>
+        <flowable:field name="messageField">
+          <flowable:expression>${message}</flowable:expression>
+        </flowable:field>
+        <flowable:field name="quantityField">
+          <flowable:string></flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_0sw22ze</incoming>
+      <outgoing>Flow_1638bnl</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_10sesvb" sourceRef="Activity_delegate_expression" targetRef="Activity_04eofkf" />
+    <serviceTask id="Activity_delegate_expression" name="Java delegate expression" flowable:async="true" flowable:delegateExpression="${jbt_RandomUserDelegate}" jmix:taskType="delegateExpression">
+      <incoming>Flow_1638bnl</incoming>
+      <outgoing>Flow_10sesvb</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_1md9psn" sourceRef="Activity_expression" targetRef="Event_0afb6ur" />
+    <serviceTask id="Activity_expression" name="Expression" flowable:expression="${jbt_GreetingMessageBean.printTime(printedTime)}" flowable:resultVariable="result" jmix:taskType="expression">
+      <incoming>Flow_0na1f9f</incoming>
+      <outgoing>Flow_1md9psn</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_0na1f9f" sourceRef="Activity_04eofkf" targetRef="Activity_expression" />
+    <serviceTask id="Activity_04eofkf" name="Spring bean" flowable:expression="${jbt_GreetingMessageBean.printMessage(&#39;Hello&#39;,message,execution)}" flowable:resultVariable="printedTime" jmix:taskType="springBean" jmix:beanName="jbt_GreetingMessageBean">
+      <extensionElements>
+        <jmix:springBean beanName="jbt_GreetingMessageBean" methodName="printMessage">
+          <jmix:methodParam name="greeting" type="java.lang.String" isVariable="false">Hello</jmix:methodParam>
+          <jmix:methodParam name="message" type="java.lang.String" isVariable="true">message</jmix:methodParam>
+          <jmix:methodParam name="execution" type="org.flowable.engine.delegate.DelegateExecution" isVariable="true">execution</jmix:methodParam>
+        </jmix:springBean>
+      </extensionElements>
+      <incoming>Flow_10sesvb</incoming>
+      <outgoing>Flow_0na1f9f</outgoing>
+    </serviceTask>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="servicetask-demo">
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="150" y="150" width="30" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0afb6ur_di" bpmnElement="Event_0afb6ur">
+        <omgdc:Bounds x="862" y="147" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qtsvu1_di" bpmnElement="Activity_java_delegate">
+        <omgdc:Bounds x="210" y="125" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15la4uk_di" bpmnElement="Activity_delegate_with_field_injection">
+        <omgdc:Bounds x="340" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gy615g_di" bpmnElement="Activity_delegate_expression">
+        <omgdc:Bounds x="470" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_136u9tk_di" bpmnElement="Activity_expression">
+        <omgdc:Bounds x="730" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ngm0aw_di" bpmnElement="Activity_04eofkf">
+        <omgdc:Bounds x="600" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0hqgwr4_di" bpmnElement="Flow_0hqgwr4">
+        <omgdi:waypoint x="180" y="165" />
+        <omgdi:waypoint x="210" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sw22ze_di" bpmnElement="Flow_0sw22ze">
+        <omgdi:waypoint x="310" y="165" />
+        <omgdi:waypoint x="340" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1638bnl_di" bpmnElement="Flow_1638bnl">
+        <omgdi:waypoint x="440" y="165" />
+        <omgdi:waypoint x="470" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10sesvb_di" bpmnElement="Flow_10sesvb">
+        <omgdi:waypoint x="570" y="165" />
+        <omgdi:waypoint x="600" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1md9psn_di" bpmnElement="Flow_1md9psn">
+        <omgdi:waypoint x="830" y="165" />
+        <omgdi:waypoint x="862" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0na1f9f_di" bpmnElement="Flow_0na1f9f">
+        <omgdi:waypoint x="700" y="165" />
+        <omgdi:waypoint x="730" y="165" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
