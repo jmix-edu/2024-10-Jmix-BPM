@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="start-by-cron" name="Start by cron" isExecutable="true">
+    <sequenceFlow id="Flow_0lfk1t8" sourceRef="Event_0q7d8i5" targetRef="Activity_18f13o0" />
+    <scriptTask id="Activity_18f13o0" name="Print" scriptFormat="groovy">
+      <incoming>Flow_0lfk1t8</incoming>
+      <outgoing>Flow_1kfa0v8</outgoing>
+      <script>def current = new Date()
+println "Process started by CRON: $current"</script>
+    </scriptTask>
+    <endEvent id="Event_1kmuhef">
+      <incoming>Flow_1kfa0v8</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1kfa0v8" sourceRef="Activity_18f13o0" targetRef="Event_1kmuhef" />
+    <startEvent id="Event_0q7d8i5">
+      <outgoing>Flow_0lfk1t8</outgoing>
+      <timerEventDefinition id="TimerEventDefinition_0nshs44">
+        <timeCycle xsi:type="tFormalExpression">0 0/5 * * * ?</timeCycle>
+      </timerEventDefinition>
+    </startEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="start-by-cron">
+      <bpmndi:BPMNShape id="Activity_1vjsaph_di" bpmnElement="Activity_18f13o0">
+        <omgdc:Bounds x="320" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kmuhef_di" bpmnElement="Event_1kmuhef">
+        <omgdc:Bounds x="472" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qj9rui_di" bpmnElement="Event_0q7d8i5">
+        <omgdc:Bounds x="232" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lfk1t8_di" bpmnElement="Flow_0lfk1t8">
+        <omgdi:waypoint x="268" y="200" />
+        <omgdi:waypoint x="320" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kfa0v8_di" bpmnElement="Flow_1kfa0v8">
+        <omgdi:waypoint x="420" y="200" />
+        <omgdi:waypoint x="472" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

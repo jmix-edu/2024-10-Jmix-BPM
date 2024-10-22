@@ -56,6 +56,8 @@ dependencies {
     implementation 'io.jmix.notifications:jmix-notifications-starter'
     implementation 'io.jmix.businesscalendar:jmix-businesscalendar-starter'
     implementation 'io.jmix.businesscalendar:jmix-businesscalendar-flowui-starter'
+    implementation 'io.jmix.quartz:jmix-quartz-starter'
+    implementation 'io.jmix.quartz:jmix-quartz-flowui-starter'
 }
 
 test {
