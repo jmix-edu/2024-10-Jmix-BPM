@@ -5,6 +5,9 @@ import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
+import io.jmix.notifications.NotificationType;
+import io.jmix.notifications.NotificationTypesRepository;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -52,5 +55,17 @@ public class JmixBpmTrainingApplication implements AppShellConfigurator {
                 + "http://localhost:"
                 + environment.getProperty("local.server.port")
                 + Strings.nullToEmpty(environment.getProperty("server.servlet.context-path")));
+    }
+
+    @Autowired
+    private NotificationTypesRepository notificationTypesRepository;
+
+    @PostConstruct
+    public void postConstruct() {
+        notificationTypesRepository.registerTypes(
+                new NotificationType("info", "INFO_CIRCLE"),
+                new NotificationType("warn", "WARNING"),
+                new NotificationType("task", "ALARM")
+        );
     }
 }

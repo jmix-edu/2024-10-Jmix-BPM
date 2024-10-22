@@ -52,6 +52,10 @@ dependencies {
     implementation 'io.jmix.bpm:jmix-bpm-flowui-starter'
     implementation 'io.jmix.bpm:jmix-bpm-starter'
     implementation 'org.hsqldb:hsqldb'
+    implementation 'io.jmix.notifications:jmix-notifications-flowui-starter'
+    implementation 'io.jmix.notifications:jmix-notifications-starter'
+    implementation 'io.jmix.businesscalendar:jmix-businesscalendar-starter'
+    implementation 'io.jmix.businesscalendar:jmix-businesscalendar-flowui-starter'
 }
 
 test {
