@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="pizza-process" name="Pizza Process (7)" isExecutable="true" flowable:candidateStarterUsers="peter" jmix:candidateStarterUsersValue="peter">
+    <extensionElements>
+      <jmix:conditionDetails conditionSource="userTaskOutcome" />
+    </extensionElements>
+    <startEvent id="Event_0yqhrkq" name="Feed developer">
+      <extensionElements>
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="message" caption="Message" type="string" editable="true" required="false" />
+            <jmix:formField id="pizzaEater" caption="Pizza eater" type="entity" editable="true" required="true">
+              <jmix:formFieldProperty name="entityName" value="jbt_User" />
+              <jmix:formFieldProperty name="uiComponent" value="comboBox" />
+              <jmix:formFieldProperty name="lookupScreen" value="jbt_User.list" />
+              <jmix:formFieldProperty name="query" value="SELECT u FROM jbt_User u WHERE u.position = &#39;developer&#39;" />
+            </jmix:formField>
+          </jmix:formFields>
+        </jmix:formData>
+      </extensionElements>
+      <outgoing>Flow_1wakb5e</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_1wakb5e" sourceRef="Event_0yqhrkq" targetRef="Activity_0i01nwd" />
+    <userTask id="Activity_0hy324h" name="Choose pizza" flowable:assignee="${pizzaEater.username}" jmix:assigneeSource="processVariable" jmix:assigneeValue="pizzaEater">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="message" caption="Team leader&#39;s message" type="string" editable="false" required="false" />
+            <jmix:formField id="specialRequirements" caption="Special requirements" type="multilineString" editable="true" required="false" />
+            <jmix:formField id="pizzaItem" caption="Pizza type" type="entity" editable="true" required="true">
+              <jmix:formFieldProperty name="uiComponent" value="comboBox" />
+              <jmix:formFieldProperty name="entityName" value="jbt_PizzaItem" />
+              <jmix:formFieldProperty name="query" value="select e from jbt_PizzaItem e" />
+              <jmix:formFieldEnumValue value="PEPPERONI" caption="Pepperoni" />
+              <jmix:formFieldEnumValue value="FOUR_CHEESE" caption="Four cheese" />
+              <jmix:formFieldEnumValue value="VEGETABLE" caption="Vegetable" />
+            </jmix:formField>
+          </jmix:formFields>
+          <jmix:formOutcomes>
+            <jmix:formOutcome id="pizza_chosen" caption="Pizza chosen" icon="ASTERISK" />
+            <jmix:formOutcome id="not_hungry" caption="Not hungry" icon="BAN" />
+          </jmix:formOutcomes>
+        </jmix:formData>
+      </extensionElements>
+      <incoming>Flow_1qcpne0</incoming>
+      <outgoing>Flow_1408fr0</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1408fr0" sourceRef="Activity_0hy324h" targetRef="Gateway_10qcz07" />
+    <userTask id="Activity_08xw3gj" name="Approve order" flowable:assignee="${jbt_RandomRobinUserProvider.getUser()}" flowable:dueDate="PT3M" jmix:assigneeSource="userProvider" jmix:assigneeValue="jbt_RandomRobinUserProvider">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+        <jmix:springBean beanName="jbt_RandomRobinUserProvider" methodName="getUser" />
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="pizzaEater" caption="Pizza eater" type="entity" editable="false" required="false">
+              <jmix:formFieldProperty name="entityName" value="jbt_User" />
+              <jmix:formFieldProperty name="uiComponent" value="entityPicker" />
+              <jmix:formFieldProperty name="lookupScreen" value="jbt_User.list" />
+            </jmix:formField>
+            <jmix:formField id="pizzaItem" caption="Pizza type" type="entity" editable="false" required="false">
+              <jmix:formFieldProperty name="uiComponent" value="entityPicker" />
+              <jmix:formFieldProperty name="entityName" value="jbt_PizzaItem" />
+              <jmix:formFieldProperty name="query" value="" />
+              <jmix:formFieldProperty name="lookupScreen" value="jbt_PizzaItem.list" />
+              <jmix:formFieldEnumValue value="PEPPERONI" caption="Pepperoni" />
+              <jmix:formFieldEnumValue value="FOUR_CHEESE" caption="Four cheese" />
+              <jmix:formFieldEnumValue value="VEGETABLE" caption="Vegetable" />
+            </jmix:formField>
+          </jmix:formFields>
+          <jmix:formOutcomes>
+            <jmix:formOutcome id="approved" caption="Approved" icon="DOLLAR" />
+            <jmix:formOutcome id="rejected" caption="Rejected" icon="BAN" />
+          </jmix:formOutcomes>
+        </jmix:formData>
+        <flowable:taskListener class="com.company.jmixbpmtraining.listeners.ApproverListener" event="assignment" />
+      </extensionElements>
+      <incoming>Flow_1j1vp7y</incoming>
+      <outgoing>Flow_1hwz49w</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1hwz49w" sourceRef="Activity_08xw3gj" targetRef="Gateway_1vd323r" />
+    <endEvent id="Event_1huzomt" name="Enjoy pizza">
+      <incoming>Flow_0ptv4rx</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1qvcr9f" sourceRef="Activity_1t1g6jy" targetRef="Activity_0lz7hku" />
+    <userTask id="Activity_1t1g6jy" name="Place order" flowable:assignee="${initiator.username}" flowable:dueDate="PT3M" jmix:assigneeSource="processVariable" jmix:assigneeValue="initiator">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="pizzaEater" caption="Pizza eater" type="entity" editable="false" required="false">
+              <jmix:formFieldProperty name="entityName" value="jbt_User" />
+              <jmix:formFieldProperty name="uiComponent" value="entityPicker" />
+              <jmix:formFieldProperty name="lookupScreen" value="jbt_User.list" />
+            </jmix:formField>
+            <jmix:formField id="pizzaItem" caption="Pizza type" type="entity" editable="false" required="false">
+              <jmix:formFieldProperty name="uiComponent" value="entityPicker" />
+              <jmix:formFieldProperty name="entityName" value="jbt_PizzaItem" />
+              <jmix:formFieldEnumValue value="PEPPERONI" caption="Pepperoni" />
+              <jmix:formFieldEnumValue value="FOUR_CHEESE" caption="Four cheese" />
+              <jmix:formFieldEnumValue value="VEGETABLE" caption="Vegetable" />
+            </jmix:formField>
+            <jmix:formField id="specialRequirements" caption="Special requirements" type="multilineString" editable="false" required="false" />
+            <jmix:formField id="approver" caption="Approver" type="string" editable="false" required="false">
+              <jmix:formFieldProperty name="entityName" value="jbt_User" />
+              <jmix:formFieldProperty name="uiComponent" value="entityPicker" />
+              <jmix:formFieldProperty name="lookupScreen" value="jbt_User.list" />
+            </jmix:formField>
+            <jmix:formField id="deliveryNumber" caption="Delivery number" type="string" editable="true" required="true" />
+          </jmix:formFields>
+        </jmix:formData>
+      </extensionElements>
+      <incoming>Flow_1628nel</incoming>
+      <outgoing>Flow_1qvcr9f</outgoing>
+    </userTask>
+    <exclusiveGateway id="Gateway_10qcz07">
+      <incoming>Flow_1408fr0</incoming>
+      <outgoing>Flow_1baz0sc</outgoing>
+      <outgoing>Flow_0azlktr</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_1baz0sc" name="Chosen" sourceRef="Gateway_10qcz07" targetRef="Activity_0istwq4">
+      <extensionElements />
+      <conditionExpression xsi:type="tFormalExpression" />
+    </sequenceFlow>
+    <endEvent id="Event_0qci3ir" name="No order">
+      <incoming>Flow_0azlktr</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0azlktr" name="Not hungry" sourceRef="Gateway_10qcz07" targetRef="Event_0qci3ir">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" userTaskId="Activity_0hy324h" userTaskOutcome="not_hungry" />
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${execution.getVariable('Activity_0hy324h_result') != null &amp;&amp; bpm_UserTaskResults.containsOutcome(execution.getVariable('Activity_0hy324h_result'), 'not_hungry')}</conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="Gateway_1vd323r" default="Flow_0k6slf2">
+      <incoming>Flow_1hwz49w</incoming>
+      <outgoing>Flow_0k6slf2</outgoing>
+      <outgoing>Flow_0cpjo5j</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_0k6slf2" name="Approved" sourceRef="Gateway_1vd323r" targetRef="Activity_123kfqi">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <endEvent id="Event_13ov0la" name="No money">
+      <incoming>Flow_1j6foy8</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0cpjo5j" name="Rejected" sourceRef="Gateway_1vd323r" targetRef="Activity_00gz7ix">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" conditionType="anyoneCompleted" userTaskId="Activity_08xw3gj" userTaskOutcome="rejected" />
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${execution.getVariable('Activity_08xw3gj_result') != null &amp;&amp; bpm_UserTaskResults.containsOutcome(execution.getVariable('Activity_08xw3gj_result'), 'rejected')}</conditionExpression>
+    </sequenceFlow>
+    <boundaryEvent id="Event_0gzomin" attachedToRef="Activity_08xw3gj">
+      <outgoing>Flow_1qdkcqf</outgoing>
+      <timerEventDefinition id="TimerEventDefinition_0kkdlm7">
+        <timeDuration xsi:type="tFormalExpression">PT10M</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="Flow_1qdkcqf" sourceRef="Event_0gzomin" targetRef="Gateway_03p6p1d" />
+    <sequenceFlow id="Flow_1she9i0" sourceRef="Activity_0istwq4" targetRef="Activity_08dz7gj" />
+    <serviceTask id="Activity_0istwq4" name="Create pizza order" flowable:type="jmix-create-entity">
+      <extensionElements>
+        <flowable:field name="resultVariable">
+          <flowable:string>pizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>jbt_PizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"initiator","valueType":"expression","value":"${initiator}"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1baz0sc</incoming>
+      <outgoing>Flow_1she9i0</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_1j1vp7y" sourceRef="Activity_08dz7gj" targetRef="Activity_08xw3gj" />
+    <serviceTask id="Activity_08dz7gj" name="Create order line" flowable:type="jmix-create-entity">
+      <extensionElements>
+        <flowable:field name="resultVariable">
+          <flowable:string>orderLine</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>jbt_OrderLine</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"specialRequirements","valueType":"expression","value":"${specialRequirements}"},{"name":"pizzaEater","valueType":"expression","value":"${pizzaEater}"},{"name":"pizzaItem","valueType":"expression","value":"${pizzaItem}"},{"name":"pizzaOrder","valueType":"expression","value":"${pizzaOrder}"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1she9i0</incoming>
+      <outgoing>Flow_1j1vp7y</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_1j6foy8" sourceRef="Activity_00gz7ix" targetRef="Event_13ov0la" />
+    <serviceTask id="Activity_00gz7ix" name="Set rejected status" flowable:type="jmix-modify-entity">
+      <extensionElements>
+        <flowable:field name="processVariable">
+          <flowable:string>pizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>jbt_PizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"status","valueType":"directValue","value":"Rejected"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_0cpjo5j</incoming>
+      <outgoing>Flow_1j6foy8</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_0ptv4rx" sourceRef="Activity_0lz7hku" targetRef="Event_1huzomt" />
+    <serviceTask id="Activity_0lz7hku" name="Finish order" flowable:type="jmix-modify-entity">
+      <extensionElements>
+        <flowable:field name="processVariable">
+          <flowable:string>pizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>jbt_PizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"deliveryNumber","valueType":"expression","value":"${deliveryNumber}"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1qvcr9f</incoming>
+      <outgoing>Flow_0ptv4rx</outgoing>
+    </serviceTask>
+    <exclusiveGateway id="Gateway_03p6p1d">
+      <incoming>Flow_1qdkcqf</incoming>
+      <incoming>Flow_058gvpb</incoming>
+      <outgoing>Flow_1628nel</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_1628nel" sourceRef="Gateway_03p6p1d" targetRef="Activity_1t1g6jy" />
+    <sequenceFlow id="Flow_058gvpb" sourceRef="Activity_123kfqi" targetRef="Gateway_03p6p1d" />
+    <serviceTask id="Activity_123kfqi" name="Set approved status" flowable:type="jmix-modify-entity">
+      <extensionElements>
+        <flowable:field name="processVariable">
+          <flowable:string>pizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>jbt_PizzaOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"status","valueType":"directValue","value":"Approved"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_0k6slf2</incoming>
+      <outgoing>Flow_058gvpb</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_1qcpne0" sourceRef="Activity_0i01nwd" targetRef="Activity_0hy324h" />
+    <serviceTask id="Activity_0i01nwd" name="Set default pizza" flowable:type="jmix-load-entities-jpql">
+      <extensionElements>
+        <flowable:field name="jpql">
+          <flowable:string>select p from jbt_PizzaItem p where p.name = :pizzaName</flowable:string>
+        </flowable:field>
+        <flowable:field name="jpqlParameters">
+          <flowable:string>[{"name":"pizzaName","valueType":"expression","value":"Four cheese"}]</flowable:string>
+        </flowable:field>
+        <flowable:field name="resultVariable">
+          <flowable:string>pizzaItem</flowable:string>
+        </flowable:field>
+        <flowable:field name="saveLoadResultAs">
+          <flowable:string>single-element</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1wakb5e</incoming>
+      <outgoing>Flow_1qcpne0</outgoing>
+    </serviceTask>
+    <textAnnotation id="TextAnnotation_02gdndm">
+      <text>Process with Entity Data tasks</text>
+    </textAnnotation>
+    <association id="Association_0vlh8es" sourceRef="Activity_0i01nwd" targetRef="TextAnnotation_02gdndm" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="pizza-process">
+      <bpmndi:BPMNShape id="Event_0yqhrkq_di" bpmnElement="Event_0yqhrkq">
+        <omgdc:Bounds x="-8" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-28" y="185" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sdwf4m_di" bpmnElement="Activity_0hy324h">
+        <omgdc:Bounds x="220" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1raeq1m_di" bpmnElement="Activity_08xw3gj">
+        <omgdc:Bounds x="830" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1huzomt_di" bpmnElement="Event_1huzomt">
+        <omgdc:Bounds x="1682" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1672" y="185" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ttks23_di" bpmnElement="Activity_1t1g6jy">
+        <omgdc:Bounds x="1370" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_10qcz07_di" bpmnElement="Gateway_10qcz07" isMarkerVisible="true">
+        <omgdc:Bounds x="365" y="135" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qci3ir_di" bpmnElement="Event_0qci3ir">
+        <omgdc:Bounds x="372" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="368" y="295" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1vd323r_di" bpmnElement="Gateway_1vd323r" isMarkerVisible="true">
+        <omgdc:Bounds x="975" y="135" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13ov0la_di" bpmnElement="Event_13ov0la">
+        <omgdc:Bounds x="1112" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1105" y="305" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rpdto3_di" bpmnElement="Activity_0istwq4">
+        <omgdc:Bounds x="490" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1swn209_di" bpmnElement="Activity_08dz7gj">
+        <omgdc:Bounds x="660" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1s4wlrf_di" bpmnElement="Activity_00gz7ix">
+        <omgdc:Bounds x="950" y="240" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iaj3at_di" bpmnElement="Activity_0lz7hku">
+        <omgdc:Bounds x="1530" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_03p6p1d_di" bpmnElement="Gateway_03p6p1d" isMarkerVisible="true">
+        <omgdc:Bounds x="1275" y="135" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hrwlbl_di" bpmnElement="Activity_123kfqi">
+        <omgdc:Bounds x="1120" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02s26st_di" bpmnElement="Activity_0i01nwd">
+        <omgdc:Bounds x="70" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_02gdndm_di" bpmnElement="TextAnnotation_02gdndm">
+        <omgdc:Bounds x="170" y="40" width="99.984375" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03m4msl_di" bpmnElement="Event_0gzomin">
+        <omgdc:Bounds x="892" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wakb5e_di" bpmnElement="Flow_1wakb5e">
+        <di:waypoint x="28" y="160" />
+        <di:waypoint x="70" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1408fr0_di" bpmnElement="Flow_1408fr0">
+        <di:waypoint x="320" y="160" />
+        <di:waypoint x="365" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hwz49w_di" bpmnElement="Flow_1hwz49w">
+        <di:waypoint x="930" y="160" />
+        <di:waypoint x="975" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qvcr9f_di" bpmnElement="Flow_1qvcr9f">
+        <di:waypoint x="1470" y="160" />
+        <di:waypoint x="1530" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1baz0sc_di" bpmnElement="Flow_1baz0sc">
+        <di:waypoint x="415" y="160" />
+        <di:waypoint x="490" y="160" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="411" y="142" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0azlktr_di" bpmnElement="Flow_0azlktr">
+        <di:waypoint x="390" y="185" />
+        <di:waypoint x="390" y="252" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="396" y="221" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k6slf2_di" bpmnElement="Flow_0k6slf2">
+        <di:waypoint x="1025" y="160" />
+        <di:waypoint x="1120" y="160" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1051" y="142" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cpjo5j_di" bpmnElement="Flow_0cpjo5j">
+        <di:waypoint x="1000" y="185" />
+        <di:waypoint x="1000" y="240" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1008" y="207" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qdkcqf_di" bpmnElement="Flow_1qdkcqf">
+        <di:waypoint x="910" y="102" />
+        <di:waypoint x="910" y="80" />
+        <di:waypoint x="1300" y="80" />
+        <di:waypoint x="1300" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1she9i0_di" bpmnElement="Flow_1she9i0">
+        <di:waypoint x="590" y="160" />
+        <di:waypoint x="660" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j1vp7y_di" bpmnElement="Flow_1j1vp7y">
+        <di:waypoint x="760" y="160" />
+        <di:waypoint x="830" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j6foy8_di" bpmnElement="Flow_1j6foy8">
+        <di:waypoint x="1050" y="280" />
+        <di:waypoint x="1112" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ptv4rx_di" bpmnElement="Flow_0ptv4rx">
+        <di:waypoint x="1630" y="160" />
+        <di:waypoint x="1682" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1628nel_di" bpmnElement="Flow_1628nel">
+        <di:waypoint x="1325" y="160" />
+        <di:waypoint x="1370" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_058gvpb_di" bpmnElement="Flow_058gvpb">
+        <di:waypoint x="1220" y="160" />
+        <di:waypoint x="1275" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qcpne0_di" bpmnElement="Flow_1qcpne0">
+        <di:waypoint x="170" y="160" />
+        <di:waypoint x="220" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0vlh8es_di" bpmnElement="Association_0vlh8es">
+        <di:waypoint x="158" y="120" />
+        <di:waypoint x="182" y="95" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

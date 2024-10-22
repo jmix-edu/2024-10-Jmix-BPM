@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101" namespace="http://www.flowable.org/dmn" name="Discount decision table">
+  <decision id="discount-decision-table" name="Discount decision table">
+    <decisionTable hitPolicy="FIRST">
+      <input label="Amount">
+        <inputExpression id="input_MVQWV" typeRef="number">
+          <text><![CDATA[amount]]></text>
+        </inputExpression>
+      </input>
+      <input label="Status">
+        <inputExpression id="input_wK8hb" typeRef="string">
+          <text><![CDATA[status]]></text>
+        </inputExpression>
+      </input>
+      <output id="output_PQC1j" label="Discount" name="discount" typeRef="number"/>
+      <rule>
+        <inputEntry id="inputEntry_gYrCf">
+          <text><![CDATA[<1000.0]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_2FIfd">
+          <text><![CDATA["silver"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_yIzL3">
+          <text><![CDATA[10]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_QYv0l">
+          <text><![CDATA[>=1000.0]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_7f4w8">
+          <text><![CDATA["gold"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_bUpn2">
+          <text><![CDATA[20]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_64OoS">
+          <text><![CDATA[<1000]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_mFuE9">
+          <text><![CDATA["silver"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_TiMfU">
+          <text><![CDATA[30]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_ELjGX">
+          <text><![CDATA[>=1000]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_Kxh1o">
+          <text><![CDATA["gold"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hvicN">
+          <text><![CDATA[40]]></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
