@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://choosePizzaForm.title">
+    <data>
+        <collection id="jbtPizzaItemDc" class="com.company.jmixbpmtraining.entity.PizzaItem">
+            <fetchPlan extends="_base"/>
+            <loader id="jbtPizzaItemDl" readOnly="true">
+                <query><![CDATA[select e from jbt_PizzaItem e]]></query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout>
+            <textField datatype="string" enabled="false" id="messageField"
+                       label="msg://choosePizzaForm.variable.message"/>
+            <entityComboBox id="pizzaItemField" itemsContainer="jbtPizzaItemDc"
+                            label="msg://choosePizzaForm.variable.pizzaItem" metaClass="jbt_PizzaItem" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+            <textArea id="specialRequirementsField"
+                      label="msg://choosePizzaForm.variable.specialRequirements"/>
+        </formLayout>
+        <hbox id="actionsPanel">
+            <button id="pizza_chosenBtn" icon="ASTERISK" text="msg://choosePizzaForm.outcome.pizza_chosen"
+                    themeNames="primary"/>
+            <button id="not_hungryBtn" icon="BAN" text="msg://choosePizzaForm.outcome.not_hungry"/>
+        </hbox>
+    </layout>
+</view>
