@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <collaboration id="Collaboration_0k261ip">
+    <participant id="Participant_0c2vcq2" name="Name" processRef="collab" />
+    <participant id="Participant_0hiaeb1" name="process 2" processRef="process-2" />
+  </collaboration>
+  <process id="collab" name="Collab" isExecutable="true">
+    <startEvent id="startEvent1">
+      <outgoing>Flow_0g3z5kg</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_0g3z5kg" sourceRef="startEvent1" targetRef="Event_1osgpx1" />
+    <endEvent id="Event_0lkyteq">
+      <incoming>Flow_1lwhihf</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1lwhihf" sourceRef="Event_1osgpx1" targetRef="Event_0lkyteq" />
+    <intermediateThrowEvent id="Event_1osgpx1">
+      <incoming>Flow_0g3z5kg</incoming>
+      <outgoing>Flow_1lwhihf</outgoing>
+      <signalEventDefinition id="SignalEventDefinition_15qi8w9" signalRef="sig-1" />
+    </intermediateThrowEvent>
+  </process>
+  <process id="process-2" name="Process-2">
+    <endEvent id="Event_1k49lit">
+      <incoming>Flow_1wsfwjl</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1wsfwjl" sourceRef="Event_1ksxets" targetRef="Event_1k49lit" />
+    <startEvent id="Event_1ksxets">
+      <outgoing>Flow_1wsfwjl</outgoing>
+      <signalEventDefinition id="SignalEventDefinition_088irdw" signalRef="sig-1" />
+    </startEvent>
+  </process>
+  <signal id="sig-1" name="Sig 1" flowable:scope="global" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="Collaboration_0k261ip">
+      <bpmndi:BPMNShape id="Participant_0c2vcq2_di" bpmnElement="Participant_0c2vcq2" isHorizontal="true">
+        <omgdc:Bounds x="90" y="50" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="150" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lkyteq_di" bpmnElement="Event_0lkyteq">
+        <omgdc:Bounds x="322" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u5w5mz_di" bpmnElement="Event_1osgpx1">
+        <omgdc:Bounds x="232" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0g3z5kg_di" bpmnElement="Flow_0g3z5kg">
+        <omgdi:waypoint x="186" y="168" />
+        <omgdi:waypoint x="232" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lwhihf_di" bpmnElement="Flow_1lwhihf">
+        <omgdi:waypoint x="268" y="168" />
+        <omgdi:waypoint x="322" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_0hiaeb1_di" bpmnElement="Participant_0hiaeb1" isHorizontal="true">
+        <omgdc:Bounds x="90" y="440" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1k49lit_di" bpmnElement="Event_1k49lit">
+        <omgdc:Bounds x="252" y="542" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rlcmlq_di" bpmnElement="Event_1ksxets">
+        <omgdc:Bounds x="162" y="542" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wsfwjl_di" bpmnElement="Flow_1wsfwjl">
+        <omgdi:waypoint x="198" y="560" />
+        <omgdi:waypoint x="252" y="560" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

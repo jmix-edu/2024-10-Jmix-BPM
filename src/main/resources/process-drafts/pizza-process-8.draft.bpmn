@@ -296,9 +296,17 @@
       </extensionElements>
       <conditionExpression xsi:type="tFormalExpression">${approvalType=="AUTO_APPROVED"}</conditionExpression>
     </sequenceFlow>
+    <textAnnotation id="TextAnnotation_1soii34">
+      <text>Process with Business Rule task</text>
+    </textAnnotation>
+    <association id="Association_0v7kxaa" sourceRef="Activity_0yrv6k2" targetRef="TextAnnotation_1soii34" />
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_process">
     <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="pizza-process">
+      <bpmndi:BPMNShape id="TextAnnotation_1soii34_di" bpmnElement="TextAnnotation_1soii34">
+        <omgdc:Bounds x="790" y="-30" width="99.98739919354838" height="54.435483870967744" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yqhrkq_di" bpmnElement="Event_0yqhrkq">
         <omgdc:Bounds x="132" y="142" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -376,6 +384,10 @@
       <bpmndi:BPMNShape id="Gateway_00bqz7i_di" bpmnElement="Gateway_00bqz7i" isMarkerVisible="true">
         <omgdc:Bounds x="975" y="135" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0v7kxaa_di" bpmnElement="Association_0v7kxaa">
+        <di:waypoint x="863" y="120" />
+        <di:waypoint x="847" y="24" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_03m4msl_di" bpmnElement="Event_0gzomin">
         <omgdc:Bounds x="1172" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>

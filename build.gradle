@@ -58,6 +58,8 @@ dependencies {
     implementation 'io.jmix.businesscalendar:jmix-businesscalendar-flowui-starter'
     implementation 'io.jmix.quartz:jmix-quartz-starter'
     implementation 'io.jmix.quartz:jmix-quartz-flowui-starter'
+    implementation 'io.jmix.email:jmix-email-flowui-starter'
+    implementation 'io.jmix.email:jmix-email-starter'
 }
 
 test {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="multi-instance" name="Multi instance" isExecutable="true">
+    <startEvent id="startEvent1">
+      <outgoing>Flow_1mqx7gy</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_1mqx7gy" sourceRef="startEvent1" targetRef="Activity_0zyvirp" />
+    <scriptTask id="Activity_0zyvirp" scriptFormat="groovy">
+      <incoming>Flow_1mqx7gy</incoming>
+      <outgoing>Flow_07mc9n4</outgoing>
+      <multiInstanceLoopCharacteristics>
+        <loopCardinality xsi:type="tFormalExpression">10</loopCardinality>
+      </multiInstanceLoopCharacteristics>
+      <script>println "Script $loopCounter"</script>
+    </scriptTask>
+    <endEvent id="Event_01ydqtx">
+      <incoming>Flow_07mc9n4</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_07mc9n4" sourceRef="Activity_0zyvirp" targetRef="Event_01ydqtx" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="multi-instance">
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="150" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0eb3hlm_di" bpmnElement="Activity_0zyvirp">
+        <omgdc:Bounds x="240" y="128" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01ydqtx_di" bpmnElement="Event_01ydqtx">
+        <omgdc:Bounds x="402" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1mqx7gy_di" bpmnElement="Flow_1mqx7gy">
+        <omgdi:waypoint x="186" y="168" />
+        <omgdi:waypoint x="240" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07mc9n4_di" bpmnElement="Flow_07mc9n4">
+        <omgdi:waypoint x="340" y="168" />
+        <omgdi:waypoint x="402" y="168" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

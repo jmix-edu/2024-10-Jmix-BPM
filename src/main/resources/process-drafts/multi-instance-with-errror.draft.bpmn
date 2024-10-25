@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="multi-instance-with-err-2" name="multi-instance-with-err-2" isExecutable="true">
+    <extensionElements>
+      <jmix:conditionDetails conditionSource="userTaskOutcome" />
+    </extensionElements>
+    <startEvent id="startEvent1">
+      <extensionElements>
+        <jmix:formData type="no-form" />
+      </extensionElements>
+      <outgoing>Flow_1o61j9j</outgoing>
+    </startEvent>
+    <subProcess id="Activity_1pinqxx" flowable:async="true">
+      <incoming>Flow_0antalv</incoming>
+      <outgoing>Flow_03rqhzz</outgoing>
+      <multiInstanceLoopCharacteristics flowable:collection="list" flowable:elementVariable="list_item" jmix:collectionSource="processVariable" jmix:collectionValue="list" />
+      <startEvent id="Event_130qkvq">
+        <outgoing>Flow_0q5oopl</outgoing>
+      </startEvent>
+      <sequenceFlow id="Flow_0q5oopl" sourceRef="Event_130qkvq" targetRef="print_user_script" />
+      <serviceTask id="simulate_error_task" name="Simulate error" flowable:expression="${jbt_ErrorService.bpmnErrorProbable(code)}" jmix:taskType="${jbt_ErrorService.bpmnErrorProbable(code)}" jmix:beanName="jbt_ErrorService">
+        <extensionElements>
+          <jmix:springBean beanName="jbt_ErrorService" methodName="bpmnErrorProbable">
+            <jmix:methodParam name="code" type="java.lang.String" isVariable="true">code</jmix:methodParam>
+          </jmix:springBean>
+        </extensionElements>
+        <incoming>Flow_15j3882</incoming>
+        <outgoing>Flow_0t3fo0i</outgoing>
+      </serviceTask>
+      <sequenceFlow id="Flow_0t3fo0i" sourceRef="simulate_error_task" targetRef="Event_1n6dned" />
+      <boundaryEvent id="Event_1fv0aqy" attachedToRef="simulate_error_task">
+        <outgoing>Flow_1yuxuew</outgoing>
+        <errorEventDefinition id="ErrorEventDefinition_1fs12tr" />
+      </boundaryEvent>
+      <sequenceFlow id="Flow_1yuxuew" sourceRef="Event_1fv0aqy" targetRef="Event_0x14xq0" />
+      <endEvent id="Event_1n6dned">
+        <incoming>Flow_0t3fo0i</incoming>
+      </endEvent>
+      <sequenceFlow id="Flow_15j3882" sourceRef="print_user_script" targetRef="simulate_error_task" />
+      <scriptTask id="print_user_script" name="Print user" scriptFormat="groovy">
+        <incoming>Flow_0q5oopl</incoming>
+        <outgoing>Flow_15j3882</outgoing>
+        <script>execution.setVariable("code", list_item.username)
+println list_item.username</script>
+      </scriptTask>
+      <endEvent id="Event_0x14xq0">
+        <incoming>Flow_1yuxuew</incoming>
+        <errorEventDefinition id="ErrorEventDefinition_1sxk551" errorRef="err_1" />
+      </endEvent>
+    </subProcess>
+    <sequenceFlow id="Flow_1o61j9j" sourceRef="startEvent1" targetRef="load_users_task" />
+    <serviceTask id="load_users_task" name="Load user list" flowable:type="jmix-load-entities-jpql">
+      <extensionElements>
+        <flowable:field name="jpql">
+          <flowable:string>select e from jbt_User e</flowable:string>
+        </flowable:field>
+        <flowable:field name="resultVariable">
+          <flowable:string>list</flowable:string>
+        </flowable:field>
+        <flowable:field name="saveLoadResultAs">
+          <flowable:string>collection</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1o61j9j</incoming>
+      <outgoing>Flow_0antalv</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_0antalv" sourceRef="load_users_task" targetRef="Activity_1pinqxx">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <endEvent id="Event_1afxapv">
+      <incoming>Flow_1mj66fr</incoming>
+    </endEvent>
+    <boundaryEvent id="Event_14iywuv" attachedToRef="Activity_1pinqxx">
+      <outgoing>Flow_0eee861</outgoing>
+      <errorEventDefinition id="ErrorEventDefinition_1hj2fzb" errorRef="err_1" />
+    </boundaryEvent>
+    <exclusiveGateway id="Gateway_1aoc8lu">
+      <incoming>Flow_03rqhzz</incoming>
+      <incoming>Flow_0eee861</incoming>
+      <outgoing>Flow_0wjdqfa</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_03rqhzz" sourceRef="Activity_1pinqxx" targetRef="Gateway_1aoc8lu">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_0eee861" sourceRef="Event_14iywuv" targetRef="Gateway_1aoc8lu">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_0wjdqfa" sourceRef="Gateway_1aoc8lu" targetRef="Activity_1y6iyy4">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_1mj66fr" sourceRef="Activity_1y6iyy4" targetRef="Event_1afxapv">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+      </extensionElements>
+    </sequenceFlow>
+    <userTask id="Activity_1y6iyy4" flowable:assignee="${initiator.username}" jmix:assigneeSource="processVariable" jmix:assigneeValue="initiator">
+      <extensionElements>
+        <jmix:formData type="no-form" />
+      </extensionElements>
+      <incoming>Flow_0wjdqfa</incoming>
+      <outgoing>Flow_1mj66fr</outgoing>
+    </userTask>
+  </process>
+  <error id="err_1" name="err_1" errorCode="100" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="multi-instance-with-err-2">
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="205" y="175" width="30" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pinqxx_di" bpmnElement="Activity_1pinqxx" isExpanded="true">
+        <omgdc:Bounds x="410" y="120" width="420" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_130qkvq_di" bpmnElement="Event_130qkvq">
+        <omgdc:Bounds x="430" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yy9syv_di" bpmnElement="simulate_error_task">
+        <omgdc:Bounds x="620" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n6dned_di" bpmnElement="Event_1n6dned">
+        <omgdc:Bounds x="752" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0k5arcy_di" bpmnElement="print_user_script">
+        <omgdc:Bounds x="490" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mraibw_di" bpmnElement="Event_0x14xq0">
+        <omgdc:Bounds x="752" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0w4ibpe_di" bpmnElement="Event_1fv0aqy">
+        <omgdc:Bounds x="652" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0q5oopl_di" bpmnElement="Flow_0q5oopl">
+        <di:waypoint x="466" y="190" />
+        <di:waypoint x="490" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t3fo0i_di" bpmnElement="Flow_0t3fo0i">
+        <di:waypoint x="720" y="190" />
+        <di:waypoint x="752" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yuxuew_di" bpmnElement="Flow_1yuxuew">
+        <di:waypoint x="670" y="248" />
+        <di:waypoint x="670" y="300" />
+        <di:waypoint x="752" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15j3882_di" bpmnElement="Flow_15j3882">
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="620" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_09k6u0v_di" bpmnElement="load_users_task">
+        <omgdc:Bounds x="270" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1afxapv_di" bpmnElement="Event_1afxapv">
+        <omgdc:Bounds x="1092" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1aoc8lu_di" bpmnElement="Gateway_1aoc8lu" isMarkerVisible="true">
+        <omgdc:Bounds x="875" y="165" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1clonrt_di" bpmnElement="Activity_1y6iyy4">
+        <omgdc:Bounds x="950" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dhyw3m_di" bpmnElement="Event_14iywuv">
+        <omgdc:Bounds x="812" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1o61j9j_di" bpmnElement="Flow_1o61j9j">
+        <di:waypoint x="235" y="190" />
+        <di:waypoint x="270" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0antalv_di" bpmnElement="Flow_0antalv">
+        <di:waypoint x="370" y="190" />
+        <di:waypoint x="410" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03rqhzz_di" bpmnElement="Flow_03rqhzz">
+        <di:waypoint x="830" y="190" />
+        <di:waypoint x="875" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eee861_di" bpmnElement="Flow_0eee861">
+        <di:waypoint x="848" y="300" />
+        <di:waypoint x="900" y="300" />
+        <di:waypoint x="900" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wjdqfa_di" bpmnElement="Flow_0wjdqfa">
+        <di:waypoint x="925" y="190" />
+        <di:waypoint x="950" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mj66fr_di" bpmnElement="Flow_1mj66fr">
+        <di:waypoint x="1050" y="190" />
+        <di:waypoint x="1092" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

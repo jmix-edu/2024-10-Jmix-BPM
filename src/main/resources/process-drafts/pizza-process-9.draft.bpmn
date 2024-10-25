@@ -418,7 +418,7 @@ execution.setVariable("message",  messageWithGreeting)</script>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1vwcplx_di" bpmnElement="TextAnnotation_1vwcplx">
-        <omgdc:Bounds x="910" y="40" width="99.99656781987919" height="40.637012630422845" />
+        <omgdc:Bounds x="910" y="40" width="100" height="40.98837209302326" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1syp80v_di" bpmnElement="TextAnnotation_1syp80v">

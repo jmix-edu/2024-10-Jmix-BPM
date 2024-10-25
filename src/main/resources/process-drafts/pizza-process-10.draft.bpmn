@@ -290,18 +290,6 @@ execution.setVariable("message",  messageWithGreeting)</script>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_process">
     <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="pizza-process">
-      <bpmndi:BPMNShape id="TextAnnotation_0udipkq_di" bpmnElement="TextAnnotation_0udipkq">
-        <omgdc:Bounds x="320" y="40" width="160" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_062ucmk_di" bpmnElement="TextAnnotation_062ucmk">
-        <omgdc:Bounds x="20" y="40" width="150" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0s8u5hk_di" bpmnElement="TextAnnotation_0s8u5hk">
-        <omgdc:Bounds x="1170" y="40" width="160" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yqhrkq_di" bpmnElement="Event_0yqhrkq">
         <omgdc:Bounds x="-18" y="142" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -387,18 +375,18 @@ execution.setVariable("message",  messageWithGreeting)</script>
         <omgdc:Bounds x="810" y="120" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0d4kup6_di" bpmnElement="Association_0d4kup6">
-        <di:waypoint x="308" y="120" />
-        <di:waypoint x="356" y="70" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1l2ywv2_di" bpmnElement="Association_1l2ywv2">
-        <di:waypoint x="10" y="145" />
-        <di:waypoint x="60" y="70" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1h79e9o_di" bpmnElement="Association_1h79e9o">
-        <di:waypoint x="1270" y="120" />
-        <di:waypoint x="1231" y="70" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_062ucmk_di" bpmnElement="TextAnnotation_062ucmk">
+        <omgdc:Bounds x="20" y="40" width="150" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0udipkq_di" bpmnElement="TextAnnotation_0udipkq">
+        <omgdc:Bounds x="320" y="40" width="160" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0s8u5hk_di" bpmnElement="TextAnnotation_0s8u5hk">
+        <omgdc:Bounds x="1170" y="40" width="160" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_03m4msl_di" bpmnElement="Event_0gzomin">
         <omgdc:Bounds x="1312" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -513,6 +501,18 @@ execution.setVariable("message",  messageWithGreeting)</script>
       <bpmndi:BPMNEdge id="Flow_1u5diw1_di" bpmnElement="Flow_1u5diw1">
         <di:waypoint x="910" y="160" />
         <di:waypoint x="960" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1l2ywv2_di" bpmnElement="Association_1l2ywv2">
+        <di:waypoint x="10" y="145" />
+        <di:waypoint x="60" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0d4kup6_di" bpmnElement="Association_0d4kup6">
+        <di:waypoint x="308" y="120" />
+        <di:waypoint x="356" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1h79e9o_di" bpmnElement="Association_1h79e9o">
+        <di:waypoint x="1270" y="120" />
+        <di:waypoint x="1231" y="70" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

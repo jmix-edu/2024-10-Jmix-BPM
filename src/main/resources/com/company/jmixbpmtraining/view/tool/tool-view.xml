@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://toolView.title">
+        <layout>
+            <vbox>
+                <h2 text="Messages and Signals in action" width="100%"/>
+                <hbox>
+                    <h6 text="Message name" alignSelf="CENTER"/>
+                    <textField datatype="string" id="messageField" title="Message" width="100%"/>
+                </hbox>
+                <hbox>
+                    <h6 text="Signal name" alignSelf="CENTER"/>
+                    <textField datatype="string" id="signalField" title="Signal" width="100%"/>
+                </hbox>
+                <hbox>
+                    <h6 text="Process Instance Id" alignSelf="CENTER"/>
+                    <textField datatype="string" id="processInstanceIdField" width="100%"/>
+                </hbox>
+                <hbox>
+                    <h6 text="Execution Id" alignSelf="CENTER"/>
+                    <textField datatype="string" id="executionField" title="Execution" width="100%"/>
+                </hbox>
+                <hbox>
+                    <button id="sendMessageBtn" text="Start process by message"/>
+                    <button id="startBySignalBtn" text="Start process by signal"/>
+                </hbox>
+                <hbox>
+                    <button id="getSubscriptionsBtn" text="Get subscribed definitions"/>
+                    <button id="intermediateSubscriptionsBtn" text="Get subscribed executions"/>
+                </hbox>
+                <hbox>
+                    <button id="throwMessageToExecutionBtn" text="Throw message to execution"/>
+                    <button id="throwSignalToExecutionBtn" text="Throw signal to execution"/>
+                    <button id="throwSignalBtn" text="Throw broadcast signal"/>
+                </hbox>
+                <button id="sendToProcessInstanceBtn" text="Send message to process instance"/>
+                <textField id="procDefField" title="Proc def" datatype="string" width="100%"/>
+                <button id="eventDefinitionsBtn" text="Event Definitions" visible="false"/>
+                <button id="startByKey" text="Start by Key"/>
+                <button id="startById" text="Start by Id"/>
+                <button id="signalAsyncBtn" text="Async"/>
+                <button id="acquireJobsBtn" text="Acquire jobs"/>
+                <hbox>
+                    <h5 text="Subscriprions"/>
+                    <button id="msgSbscrBtn" text="get message subsc."/>
+                    <button id="signalSbscrBtn" text="get signal subscr."/>
+                    <button id="timerSbscrBtn" text="get timers subsc."/>
+                </hbox>
+            </vbox>
+        </layout>
+</view>

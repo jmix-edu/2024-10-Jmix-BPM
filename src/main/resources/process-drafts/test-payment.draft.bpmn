@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="test-payment" name="Test payment" isExecutable="true">
+    <startEvent id="startEvent1">
+      <extensionElements>
+        <jmix:formData type="input-dialog" openMode="DIALOG">
+          <jmix:formFields>
+            <jmix:formField id="sender" caption="Sender" type="string" editable="true" required="false" />
+            <jmix:formField id="receiver" caption="Receiver" type="string" editable="true" required="false" />
+            <jmix:formField id="value" caption="Value" type="long" editable="true" required="false" />
+          </jmix:formFields>
+        </jmix:formData>
+      </extensionElements>
+      <outgoing>Flow_0zjskp3</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_0zjskp3" sourceRef="startEvent1" targetRef="Activity_1ygughp" />
+    <callActivity id="Activity_1ygughp" name="Payment" calledElement="perform-transaction" flowable:inheritVariables="true">
+      <incoming>Flow_0zjskp3</incoming>
+      <outgoing>Flow_0ejvfu4</outgoing>
+    </callActivity>
+    <endEvent id="Event_0myxu1d">
+      <incoming>Flow_0lb9c84</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0ejvfu4" sourceRef="Activity_1ygughp" targetRef="Activity_1t8aomo" />
+    <boundaryEvent id="Event_134xw2x" attachedToRef="Activity_1ygughp">
+      <outgoing>Flow_1lzqgmq</outgoing>
+      <errorEventDefinition id="ErrorEventDefinition_0y1dcb5" />
+    </boundaryEvent>
+    <sequenceFlow id="Flow_1lzqgmq" sourceRef="Event_134xw2x" targetRef="Activity_0h4k79c" />
+    <scriptTask id="Activity_0h4k79c" name="Payment failed" scriptFormat="groovy">
+      <incoming>Flow_1lzqgmq</incoming>
+      <outgoing>Flow_0ftat00</outgoing>
+      <script>println "Payment failed"</script>
+    </scriptTask>
+    <endEvent id="Event_04h9xxd">
+      <incoming>Flow_0ftat00</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0ftat00" sourceRef="Activity_0h4k79c" targetRef="Event_04h9xxd" />
+    <sequenceFlow id="Flow_0lb9c84" sourceRef="Activity_1t8aomo" targetRef="Event_0myxu1d" />
+    <scriptTask id="Activity_1t8aomo" name="Success" scriptFormat="groovy">
+      <incoming>Flow_0ejvfu4</incoming>
+      <outgoing>Flow_0lb9c84</outgoing>
+      <script>println "Payment success"</script>
+    </scriptTask>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="test-payment">
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="150" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kfwpw1_di" bpmnElement="Activity_1ygughp">
+        <omgdc:Bounds x="240" y="128" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0myxu1d_di" bpmnElement="Event_0myxu1d">
+        <omgdc:Bounds x="562" y="150" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rfwygu_di" bpmnElement="Activity_0h4k79c">
+        <omgdc:Bounds x="410" y="250" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04h9xxd_di" bpmnElement="Event_04h9xxd">
+        <omgdc:Bounds x="562" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1655mxg_di" bpmnElement="Activity_1t8aomo">
+        <omgdc:Bounds x="410" y="128" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1omtw89_di" bpmnElement="Event_134xw2x">
+        <omgdc:Bounds x="322" y="190" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0zjskp3_di" bpmnElement="Flow_0zjskp3">
+        <di:waypoint x="186" y="168" />
+        <di:waypoint x="240" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ejvfu4_di" bpmnElement="Flow_0ejvfu4">
+        <di:waypoint x="340" y="168" />
+        <di:waypoint x="410" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lzqgmq_di" bpmnElement="Flow_1lzqgmq">
+        <di:waypoint x="340" y="226" />
+        <di:waypoint x="340" y="290" />
+        <di:waypoint x="410" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ftat00_di" bpmnElement="Flow_0ftat00">
+        <di:waypoint x="510" y="290" />
+        <di:waypoint x="562" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lb9c84_di" bpmnElement="Flow_0lb9c84">
+        <di:waypoint x="510" y="168" />
+        <di:waypoint x="562" y="168" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

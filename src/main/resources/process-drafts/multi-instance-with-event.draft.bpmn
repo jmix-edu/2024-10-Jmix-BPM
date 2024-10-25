@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:jmix="http://jmix.io/schema/bpm/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="multi-instance-with-event" name="Multi instance with event" isExecutable="true">
+    <extensionElements>
+      <jmix:conditionDetails conditionSource="userTaskOutcome" />
+    </extensionElements>
+    <startEvent id="startEvent1">
+      <outgoing>Flow_0dew6bf</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_0dew6bf" sourceRef="startEvent1" targetRef="Activity_0my3ok0" />
+    <serviceTask id="Activity_0my3ok0" name="Load list of developers" flowable:type="jmix-load-entities-jpql">
+      <extensionElements>
+        <flowable:field name="jpql">
+          <flowable:string>select u from jbt_User u where u.position = 'developer'</flowable:string>
+        </flowable:field>
+        <flowable:field name="resultVariable">
+          <flowable:string>developers</flowable:string>
+        </flowable:field>
+        <flowable:field name="saveLoadResultAs">
+          <flowable:string>collection</flowable:string>
+        </flowable:field>
+        <flowable:field name="jpqlParameters">
+          <flowable:string>[]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_0dew6bf</incoming>
+      <outgoing>Flow_0om26o9</outgoing>
+    </serviceTask>
+    <sequenceFlow id="Flow_0om26o9" sourceRef="Activity_0my3ok0" targetRef="Activity_03qawsu" />
+    <userTask id="Activity_03qawsu" name="Do task" flowable:assignee="${developers_item.username}" jmix:assigneeSource="expression" jmix:assigneeValue="${developers_item.username}">
+      <incoming>Flow_0om26o9</incoming>
+      <outgoing>Flow_1i9olv3</outgoing>
+      <multiInstanceLoopCharacteristics flowable:collection="developers" flowable:elementVariable="developers_item" jmix:collectionSource="processVariable" jmix:collectionValue="developers" />
+    </userTask>
+    <endEvent id="Event_00k3wdy">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+      </extensionElements>
+      <incoming>Flow_1i9olv3</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1i9olv3" sourceRef="Activity_03qawsu" targetRef="Event_00k3wdy">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+      </extensionElements>
+    </sequenceFlow>
+    <boundaryEvent id="Event_016khxm" attachedToRef="Activity_03qawsu">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="userTaskOutcome" />
+      </extensionElements>
+      <timerEventDefinition id="TimerEventDefinition_0s8as06" />
+    </boundaryEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
+    <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="multi-instance-with-event">
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="startEvent1">
+        <omgdc:Bounds x="150" y="150" width="30" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bu56jh_di" bpmnElement="Activity_0my3ok0">
+        <omgdc:Bounds x="230" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tf32nf_di" bpmnElement="Activity_03qawsu">
+        <omgdc:Bounds x="380" y="125" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00k3wdy_di" bpmnElement="Event_00k3wdy">
+        <omgdc:Bounds x="532" y="147" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16u8m13_di" bpmnElement="Event_016khxm">
+        <omgdc:Bounds x="432" y="107" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dew6bf_di" bpmnElement="Flow_0dew6bf">
+        <omgdi:waypoint x="180" y="165" />
+        <omgdi:waypoint x="230" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0om26o9_di" bpmnElement="Flow_0om26o9">
+        <omgdi:waypoint x="330" y="165" />
+        <omgdi:waypoint x="380" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i9olv3_di" bpmnElement="Flow_1i9olv3">
+        <omgdi:waypoint x="480" y="165" />
+        <omgdi:waypoint x="532" y="165" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -14,7 +14,7 @@
     </facets>
     <layout>
         <formLayout>
-            <textField datatype="string" enabled="false" id="messageField"
+            <textField datatype="string" readOnly="true" id="messageField"
                        label="msg://choosePizzaForm.variable.message"/>
             <entityComboBox id="pizzaItemField" itemsContainer="jbtPizzaItemDc"
                             label="msg://choosePizzaForm.variable.pizzaItem" metaClass="jbt_PizzaItem" required="true">

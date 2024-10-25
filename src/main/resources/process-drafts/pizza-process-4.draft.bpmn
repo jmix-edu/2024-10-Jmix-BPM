@@ -144,10 +144,6 @@
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_process">
     <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="pizza-process">
-      <bpmndi:BPMNShape id="TextAnnotation_18skxcj_di" bpmnElement="TextAnnotation_18skxcj">
-        <omgdc:Bounds x="600" y="40" width="99.99646092865233" height="55.49263873159682" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yqhrkq_di" bpmnElement="Event_0yqhrkq">
         <omgdc:Bounds x="147" y="142" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -189,10 +185,10 @@
           <omgdc:Bounds x="635" y="295" width="51" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_02z7smt_di" bpmnElement="Association_02z7smt">
-        <di:waypoint x="588" y="120" />
-        <di:waypoint x="611" y="95" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_18skxcj_di" bpmnElement="TextAnnotation_18skxcj">
+        <omgdc:Bounds x="600" y="40" width="99.99646092865233" height="55.49263873159682" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wakb5e_di" bpmnElement="Flow_1wakb5e">
         <di:waypoint x="183" y="160" />
         <di:waypoint x="240" y="160" />
@@ -236,6 +232,10 @@
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="668" y="222" width="44" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_02z7smt_di" bpmnElement="Association_02z7smt">
+        <di:waypoint x="588" y="120" />
+        <di:waypoint x="611" y="95" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

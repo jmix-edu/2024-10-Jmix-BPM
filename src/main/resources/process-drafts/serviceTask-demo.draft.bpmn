@@ -36,7 +36,7 @@
           <flowable:expression>${message}</flowable:expression>
         </flowable:field>
         <flowable:field name="quantityField">
-          <flowable:string></flowable:string>
+          <flowable:string>AAA</flowable:string>
         </flowable:field>
       </extensionElements>
       <incoming>Flow_0sw22ze</incoming>
